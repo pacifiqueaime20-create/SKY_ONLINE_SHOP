@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SKY ONLINE SHOP</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, Segoe UI, Roboto, sans-serif; background: #f4f1ec; color: #1c1c1a; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; background: #4a2420; color: #fff; flex-wrap: wrap; gap: 8px; }
+    header .balance { color: #ffb8a6; }
+    .logo { font-weight: 800; font-size: 24px; color: #ff6a4d; letter-spacing: .5px; }
+    nav { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: inherit; }
+    select { padding: 10px; border: 1px solid #e4e4df; border-radius: 8px; font-size: 14px; background: #fff; }
+    .hero { text-align: center; padding: 64px 16px 56px; background: linear-gradient(120deg, #fff1e8 0%, #ffd9c7 55%, #ffb89c 100%); border-bottom: 4px solid #e8452c; }
+    .hero h1 { margin: 0 0 10px; font-size: 40px; color: #e8452c; line-height: 1.15; }
+    .hero p { color: #4a2420; font-size: 18px; margin: 0 0 24px; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 1100px; margin: 0 auto; padding: 28px 16px 8px; text-align: center; }
+    .features .ico { font-size: 34px; }
+    .features strong { display: block; margin-top: 6px; font-size: 17px; }
+    .features span { color: #6b6b66; font-size: 14px; }
+    .search { display: flex; gap: 8px; max-width: 620px; margin: 0 auto; }
+    .search input { flex: 1; padding: 14px; border: 1px solid #e4e4df; border-radius: 8px; font-size: 15px; background: #fff; }
+    button { padding: 12px 18px; border: 0; border-radius: 8px; background: #e8452c; color: #fff; font-size: 15px; cursor: pointer; }
+    button.ghost { background: #fff; color: #1c1c1a; border: 1px solid #e4e4df; }
+    button.small { padding: 8px 12px; font-size: 14px; }
+    button.buy, button.chat-btn { margin-top: 8px; width: 100%; padding: 9px; font-size: 14px; }
+    main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    .note { color: #6b6b66; font-size: 13px; margin: 0 0 12px; }
+    .muted { color: #6b6b66; font-size: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: #fff; border: 1px solid #e4e4df; border-radius: 6px; overflow: hidden; transition: box-shadow .15s; }
+    .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+    .thumb { aspect-ratio: 4 / 3; background: #ecece7; display: flex; align-items: center; justify-content: center; color: #6b6b66; font-size: 40px; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .body { padding: 12px; }
+    .title { font-weight: 600; }
+    .price { color: #e8452c; font-weight: 700; font-size: 20px; margin-bottom: 2px; }
+    .shop { color: #e8452c; font-size: 13px; text-transform: uppercase; }
+    .balance { font-weight: 600; color: #e8452c; }
+    footer { text-align: center; color: #6b6b66; padding: 32px 16px; font-size: 14px; }
+    .gate { display: flex; justify-content: center; padding: 48px 16px; }
+    .box { background: #fff; border: 1px solid #e4e4df; border-radius: 12px; padding: 28px; width: 100%; max-width: 420px; }
+    .box h2 { margin: 0 0 4px; }
+    .box .sub { color: #6b6b66; margin: 0 0 8px; font-size: 14px; }
+    .box label { display: block; font-size: 14px; margin: 14px 0 4px; }
+    .box input, .box select { width: 100%; padding: 11px 12px; border: 1px solid #e4e4df; border-radius: 8px; font-size: 15px; }
+    .box button[type=submit] { width: 100%; margin-top: 20px; }
+    .box .row { display: flex; gap: 8px; margin-top: 20px; }
+    .box .row button { flex: 1; }
+    .box .row button[type=submit] { width: auto; margin-top: 0; }
+    .error { color: #b3261e; font-size: 14px; margin-top: 8px; min-height: 18px; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 10; }
+    .overlay.open { display: flex; }
+    .overlay .box { max-height: 92vh; overflow: auto; }
+    .secure { background: #eef9f1; border: 1px solid #b9e3c6; color: #1d5c33; border-radius: 8px; padding: 8px 10px; font-size: 13px; margin-top: 14px; }
+    .demo { background: #fff8e1; border: 1px solid #f1d98a; color: #6b5200; border-radius: 8px; padding: 8px 10px; font-size: 13px; margin-top: 14px; }
+    .hist { margin-top: 16px; font-size: 13px; color: #6b6b66; }
+    .hist div { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f0f0ec; }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #1c1c1a; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; display: none; z-index: 30; max-width: 90%; text-align: center; }
+    .toast.show { display: block; }
+    /* Chat */
+    .chat { position: fixed; right: 16px; bottom: 16px; width: 360px; max-width: calc(100vw - 32px); height: 480px; max-height: calc(100vh - 32px); background: #fff; border: 1px solid #e4e4df; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,.18); display: none; flex-direction: column; z-index: 20; overflow: hidden; }
+    .chat.open { display: flex; }
+    .chat-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #e4e4df; }
+    .chat-head strong { flex: 1; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chat-body { flex: 1; overflow-y: auto; padding: 12px; background: #f7f7f5; display: flex; flex-direction: column; gap: 8px; }
+    .msg { max-width: 80%; padding: 8px 10px; border-radius: 10px; font-size: 14px; background: #fff; border: 1px solid #e4e4df; align-self: flex-start; overflow-wrap: anywhere; }
+    .msg.me { align-self: flex-end; background: #e8452c; color: #fff; border-color: #e8452c; }
+    .msg time { display: block; font-size: 11px; opacity: .7; margin-top: 2px; }
+    .chat-form { display: flex; gap: 8px; padding: 10px; border-top: 1px solid #e4e4df; }
+    .chat-form input { flex: 1; padding: 10px; border: 1px solid #e4e4df; border-radius: 8px; font-size: 14px; }
+    .chat-form button { padding: 10px 14px; font-size: 14px; }
+    .chat .error { padding: 0 12px 8px; margin: 0; min-height: 0; }
+    .thread { padding: 10px 12px; background: #fff; border: 1px solid #e4e4df; border-radius: 8px; cursor: pointer; }
+    .thread small { display: block; color: #6b6b66; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .panel { background: #fff; border: 1px solid #e4e4df; border-radius: 12px; padding: 20px; margin: 0 0 20px; }
+    .panel h3 { margin: 0 0 4px; }
+    .panel label { display: block; font-size: 14px; margin: 12px 0 4px; }
+    .panel input, .panel textarea { width: 100%; padding: 10px 12px; border: 1px solid #e4e4df; border-radius: 8px; font-size: 15px; font-family: inherit; }
+    .panel textarea { min-height: 70px; resize: vertical; }
+    .panel button[type=submit] { margin-top: 14px; }
+    .desc { color: #3c3c38; font-size: 13px; margin: 4px 0; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    button.del { margin-top: 8px; width: 100%; padding: 9px; font-size: 14px; color: #b3261e; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tabs button { flex: 1; padding: 10px; font-size: 14px; background: #fff; color: #1c1c1a; border: 1px solid #e4e4df; }
+    .tabs button.active { background: #e8452c; color: #fff; border-color: #e8452c; }
+    .userwrap { position: relative; display: inline-block; vertical-align: middle; margin-right: 6px; }
+    .avatar { position: relative; width: 38px; height: 38px; padding: 0; border-radius: 50%; background: #e8452c; color: #fff; font-weight: 700; font-size: 16px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #ff9b86; cursor: pointer; }
+    .avatar::after { content: ""; position: absolute; right: -3px; bottom: -3px; width: 11px; height: 11px; border-radius: 50%; background: #2ecc71; border: 2px solid #4a2420; }
+    .usermenu { display: none; position: absolute; right: 0; top: 46px; background: #fff; color: #1c1c1a; border: 1px solid #e4e4df; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.2); padding: 12px 14px; min-width: 230px; z-index: 15; font-size: 14px; text-align: left; }
+    .usermenu.open { display: block; }
+    .usermenu .em { font-weight: 600; overflow-wrap: anywhere; }
+    .usermenu .meta { color: #6b6b66; font-size: 13px; margin-top: 3px; }
+    .credit { text-align: center; color: #6b6b66; font-size: 12px; padding: 0 16px 8px; }
+    .credit a { color: inherit; }
+    #google_translate_element { text-align: center; padding: 0 16px 24px; min-height: 8px; }
+    .goog-te-banner-frame, .skiptranslate iframe.goog-te-banner-frame { display: none !important; }
+    body { top: 0 !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" translate="no">SKY ONLINE SHOP</div>
+    <nav>
+      <a href="#" id="navProducts" data-i18n="nav_products" style="display:none">Ibicuruzwa</a>
+      <span id="authArea"></span>
+      <select id="lang" aria-label="Language">
+        <option value="rw">Kinyarwanda</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="sw">Kiswahili</option>
+      </select>
+    </nav>
+  </header>
+
+  <!-- Igice cya mbere: form yo kwinjira (igaragara mbere yo kwinjira) -->
+  <section class="gate" id="gate">
+    <form class="box" id="loginForm">
+      <div class="tabs">
+        <button type="button" id="tabLogin" class="active" data-i18n="tab_login">Kwinjira</button>
+        <button type="button" id="tabSignup" data-i18n="tab_signup">Kwiyandikisha</button>
+      </div>
+      <h2 id="gateTitle">Kwinjira</h2>
+      <p class="sub" data-i18n="gate_text">Injira kugira ngo ubone ibicuruzwa.</p>
+      <label for="email" id="emailLabel">Email</label>
+      <input id="email" type="text" autocomplete="username" required>
+      <label for="password" data-i18n="password">Password</label>
+      <input id="password" type="password" minlength="8" required>
+      <div id="signupFields" style="display:none">
+        <label for="phone" data-i18n="phone_label">Telefoni</label>
+        <input id="phone" type="text" inputmode="tel" autocomplete="tel" placeholder="+250788123456">
+        <label for="country" data-i18n="country">Igihugu uturukamo</label>
+        <select id="country"></select>
+        <label for="role" data-i18n="role">Ndi</label>
+        <select id="role">
+          <option value="BUYER" data-i18n="role_buyer">Umuguzi</option>
+          <option value="SELLER" data-i18n="role_seller">Umugurisha</option>
+        </select>
+        <div id="shopField" style="display:none">
+          <label for="shopName" data-i18n="shop_name">Izina ry'iduka ryawe</label>
+          <input id="shopName" maxlength="80" autocomplete="off">
+        </div>
+      </div>
+      <div class="error" id="formError"></div>
+      <button type="submit" id="submitBtn">Injira</button>
+    </form>
+  </section>
+
+  <!-- Igice cya kabiri: ibicuruzwa (bigaragara nyuma yo kwinjira gusa) -->
+  <div id="app" style="display:none">
+    <section class="hero">
+      <h1 data-i18n="hero_title">Gura kandi ugurishe ku isi hose</h1>
+      <p data-i18n="hero_text">Ihuza abagurisha n'abaguzi, bakavugana kandi bakishyura online.</p>
+      <form class="search" onsubmit="event.preventDefault(); render();">
+        <input id="q" data-i18n-placeholder="search_placeholder" placeholder="Shakisha ibicuruzwa...">
+        <button type="submit" data-i18n="search_btn">Shakisha</button>
+      </form>
+    </section>
+
+    <section class="features">
+      <div><div class="ico">🏆</div><strong data-i18n="f1_t">Ubucuruzi bwizewe</strong><span data-i18n="f1_d">Abagurisha nyabo, ibicuruzwa nyabyo.</span></div>
+      <div><div class="ico">💬</div><strong data-i18n="f2_t">Vugana n'umugurisha</strong><span data-i18n="f2_d">Baza ibibazo byose mbere yo kugura.</span></div>
+      <div><div class="ico">🌍</div><strong data-i18n="f3_t">Ku isi hose</strong><span data-i18n="f3_d">Ibiciro mu mafaranga y'igihugu cyawe.</span></div>
+      <div><div class="ico">🛒</div><strong data-i18n="f4_t">Kugura biroroshye</strong><span data-i18n="f4_d">Shyiramo amafaranga, ugure ako kanya.</span></div>
+    </section>
+
+    <main>
+      <section class="panel" id="sellerPanel" style="display:none">
+        <h3 data-i18n="sell_title">Shyiraho igicuruzwa ushaka kugurisha</h3>
+        <form id="productForm">
+          <label for="pTitle" data-i18n="prod_title">Izina ry'igicuruzwa</label>
+          <input id="pTitle" maxlength="100" autocomplete="off" required>
+          <label for="pPrice" id="priceLabel">Igiciro</label>
+          <input id="pPrice" type="number" step="any" min="0" inputmode="decimal" required>
+          <label for="pDesc" data-i18n="prod_desc">Ibisobanuro (si ngombwa)</label>
+          <textarea id="pDesc" maxlength="1000"></textarea>
+          <label for="pImage" data-i18n="prod_image">Ifoto (si ngombwa)</label>
+          <input id="pImage" type="file" accept="image/png,image/jpeg,image/webp">
+          <div class="error" id="productError"></div>
+          <button type="submit" data-i18n="add_product">Shyiraho</button>
+        </form>
+      </section>
+      <h2 data-i18n="products_title">Ibicuruzwa</h2>
+      <p class="note" id="priceNote"></p>
+      <div id="grid" class="grid"></div>
+      <p id="empty" style="display:none; color:#6b6b66;"></p>
+    </main>
+  </div>
+
+  <footer data-i18n="footer">© 2026 SKY ONLINE SHOP</footer>
+  <div class="credit" id="rateCredit"></div>
+  <div id="google_translate_element"></div>
+
+  <!-- Idirishya ryo gushyiramo amafaranga (Deposit) -->
+  <div class="overlay" id="depositOverlay">
+    <form class="box" id="depositForm">
+      <h2 data-i18n="deposit_title">Gushyiramo amafaranga (Deposit)</h2>
+      <div style="margin-top:6px"><span data-i18n="balance">Amafaranga mfite</span>: <span class="balance" id="depBalance"></span></div>
+      <label for="amount"><span data-i18n="amount">Umubare</span> <span id="amountCur"></span></label>
+      <input id="amount" type="number" step="any" inputmode="decimal" required>
+      <div class="secure" data-i18n="pay_note">Wishyura ukoresheje paji y'umutekano.</div>
+      <div class="error" id="depositError"></div>
+      <div class="row">
+        <button type="button" class="ghost" id="depCancel" data-i18n="cancel">Hagarika</button>
+        <button type="submit" data-i18n="confirm_deposit">Emeza deposit</button>
+      </div>
+      <div class="hist" id="hist"></div>
+    </form>
+  </div>
+
+  <!-- Chat hagati y'umuguzi n'umugurisha -->
+  <aside class="chat" id="chatPanel">
+    <div class="chat-head">
+      <button type="button" class="ghost small" id="chatBack" data-i18n="back" style="display:none">← Inyuma</button>
+      <strong id="chatTitle"></strong>
+      <button type="button" class="ghost small" id="chatClose" aria-label="Close">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="error" id="chatError"></div>
+    <form class="chat-form" id="chatForm">
+      <input id="chatInput" maxlength="1000" autocomplete="off" data-i18n-placeholder="type_msg" placeholder="Andika ubutumwa...">
+      <button type="submit" data-i18n="send">Ohereza</button>
+    </form>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---------- Indimi ----------
+    const translations = {
+      rw: {
+        nav_products: "Ibicuruzwa",
+        hero_title: "Gura kandi ugurishe ku isi hose",
+        hero_text: "Ihuza abagurisha n'abaguzi, bakavugana kandi bakishyura online.",
+        search_placeholder: "Shakisha ibicuruzwa...", search_btn: "Shakisha",
+        products_title: "Ibicuruzwa", no_results: "Nta bicuruzwa byabonetse.",
+        footer: "© 2026 SKY ONLINE SHOP",
+        login_title: "Kwinjira", gate_text: "Injira kugira ngo ubone ibicuruzwa.",
+        email: "Email", password: "Password (nibura inyuguti 8)",
+        country: "Igihugu uturukamo", choose_country: "Hitamo igihugu...",
+        submit: "Injira", logout: "Gusohoka", hello: "Muraho",
+        price_note: "Ibiciro biragaragazwa mu mafaranga y'igihugu cyawe (", price_note_end: "). Ni ibigereranyo.",
+        price_note_usd: "Igipimo cy'ivunjisha cy'ifaranga ry'igihugu cyawe ntikiboneka none; ibiciro biri mu madolari (USD).",
+        tab_login: "Kwinjira", tab_signup: "Kwiyandikisha", signup_title: "Kwiyandikisha", signup_btn: "Fungura konti",
+        email_exists: "Iyi email isanzwe ifite konti. Koresha \"Kwinjira\" (log in).",
+        shop_exists: "Iri zina ry'iduka risanzwe rikoreshwa. Hitamo irindi.",
+        bad_login: "Email cyangwa password si byo. Niba nta konti ufite, hitamo \"Kwiyandikisha\".",
+        bad_password: "Password igomba kuba nibura inyuguti 8.",
+        server_error: "Seriveri ntibonetse. Reba ko \"python app.py\" ikora.",
+        identifier: "Email cyangwa telefoni (+250...)", phone_label: "Telefoni (si ngombwa): +250788123456",
+        bad_identifier: "Andika email ya Gmail cyangwa nomero ya telefoni itangirwa na + (urugero +250788123456).",
+        bad_phone: "Nomero ya telefoni siyo. Yandike itangirwa na + (urugero +250788123456).",
+        phone_exists: "Iyi nomero ya telefoni isanzwe ifite konti. Koresha \"Kwinjira\" (log in).",
+        sell_title: "Shyiraho igicuruzwa ushaka kugurisha", prod_title: "Izina ry'igicuruzwa", prod_price: "Igiciro",
+        prod_desc: "Ibisobanuro (si ngombwa)", prod_image: "Ifoto (si ngombwa, PNG/JPG/WEBP, ntirenze 2MB)",
+        add_product: "Shyiraho", delete: "Siba", delete_confirm: "Wemeza gusiba iki gicuruzwa?",
+        product_added: "Igicuruzwa cyashyizweho", product_deleted: "Igicuruzwa cyasibwe",
+        bad_title: "Andika izina ry'igicuruzwa (inyuguti 2 kugeza 100).", bad_price: "Andika igiciro gikwiye (kirenze 0).",
+        bad_image: "Ifoto ntiyemewe. Koresha PNG, JPG cyangwa WEBP.", image_big: "Ifoto ni nini cyane (ntirenze 2MB).",
+        no_products: "Nta bicuruzwa biraboneka. Ibizashyirwaho n'abagurisha bizagaragara hano.",
+        price_unavailable: "Igiciro cy'iki gicuruzwa ntigishobora guhindurwa none. Gerageza nyuma.",
+        chat_interest: "Muraho, nshimishijwe na ",
+        pick_country: "Hitamo igihugu.",
+        bad_email: "Email siyo (incorrect email). Koresha email ya Gmail, urugero: izina@gmail.com",
+        balance: "Amafaranga mfite", deposit: "Shyiramo amafaranga",
+        deposit_title: "Gushyiramo amafaranga (Deposit)", amount: "Umubare",
+        method: "Uburyo bwo kwishyura", m_momo: "MTN Mobile Money", m_airtel: "Airtel Money",
+        m_card: "Ikarita (Visa/Mastercard)", confirm_deposit: "Komeza wishyure", cancel: "Hagarika",
+        buy: "Gura", bought: "Waguze",
+        low_balance: "Amafaranga ntahagije. Banza ushyiremo amafaranga (deposit).",
+        bad_amount: "Andika umubare ukwiye.", between: "Hagati ya",
+        history: "Amateka", deposit_done: "Deposit yakozwe", tx_deposit: "Deposit", tx_purchase: "Kugura",
+        role: "Ndi", role_buyer: "Umuguzi", role_seller: "Umugurisha",
+        shop_name: "Izina ry'iduka ryawe", shop_required: "Andika izina ry'iduka ryawe.",
+        chat_btn: "Vugana n'umugurisha", chat_title: "Ikiganiro na", type_msg: "Andika ubutumwa...",
+        send: "Ohereza", inbox: "Ubutumwa", no_threads: "Nta butumwa buraboneka.", back: "← Inyuma",
+        chat_empty: "Nta butumwa. Tangira ikiganiro!",
+        f1_t: "Ubucuruzi bwizewe",
+        f1_d: "Abagurisha nyabo, ibicuruzwa nyabyo.",
+        f2_t: "Vugana n'umugurisha",
+        f2_d: "Baza ibibazo byose mbere yo kugura.",
+        f3_t: "Ku isi hose",
+        f3_d: "Ibiciro mu mafaranga y'igihugu cyawe.",
+        f4_t: "Kugura biroroshye",
+        f4_d: "Shyiramo amafaranga, ugure ako kanya.",
+        pay_note: "Uzakomeza kuri paji y'umutekano ya Flutterwave wishyure n'amafaranga yawe nyayo: MTN/Airtel Mobile Money cyangwa Visa/Mastercard. Numero yawe, PIN n'ikarita ntibigera kuri seriveri yacu.",
+        pay_redirect: "Urajyanwa kwishyura...",
+        pay_unconfigured: "Kwishyura ntikurashyirwaho n'ubuyobozi bw'urubuga (nta Flutterwave key).",
+        pay_error: "Kwishyura ntibishobotse none. Gerageza nyuma.",
+        pay_success: "Kwishyura byagenze neza! Amafaranga yawe yongewe muri wallet.",
+        pay_failed: "Kwishyura ntibyagenze neza. Nta mafaranga yakuweho cyangwa yongewe.",
+        pay_cancelled: "Wahagaritse kwishyura.",
+        pay_pending: "Kwishyura biracyasuzumwa. Amafaranga azagaragara muri wallet vuba (komeza urebe).",
+        confirm_buy: "Wemeza kugura",
+        tx_sale: "Igurisha",
+        chat_error: "Ubutumwa ntibwoherejwe. Reba ko seriveri (python app.py) ikora."
+      },
+      en: {
+        nav_products: "Products",
+        hero_title: "Buy and sell worldwide",
+        hero_text: "Connects sellers and buyers, who can chat and pay online.",
+        search_placeholder: "Search products...", search_btn: "Search",
+        products_title: "Products", no_results: "No products found.",
+        footer: "© 2026 SKY ONLINE SHOP",
+        login_title: "Sign in", gate_text: "Sign in to see the products.",
+        email: "Email", password: "Password (min. 8 characters)",
+        country: "Your country", choose_country: "Choose a country...",
+        submit: "Sign in", logout: "Log out", hello: "Hello",
+        price_note: "Prices are shown in your country's currency (", price_note_end: "). They are estimates.",
+        price_note_usd: "The exchange rate for your country's currency is not available right now; prices are shown in US dollars (USD).",
+        tab_login: "Log in", tab_signup: "Sign up", signup_title: "Create account", signup_btn: "Create account",
+        email_exists: "This email already has an account. Please use \"Log in\".",
+        shop_exists: "This shop name is already taken. Please choose another.",
+        bad_login: "Wrong email or password. If you have no account, choose \"Sign up\".",
+        bad_password: "Password must be at least 8 characters.",
+        server_error: "Cannot reach the server. Check that \"python app.py\" is running.",
+        identifier: "Email or phone (+250...)", phone_label: "Phone (optional): +250788123456",
+        bad_identifier: "Enter a Gmail address or a phone number starting with + (e.g. +250788123456).",
+        bad_phone: "Invalid phone number. Start with + (e.g. +250788123456).",
+        phone_exists: "This phone number already has an account. Please use \"Log in\".",
+        sell_title: "Add a product to sell", prod_title: "Product name", prod_price: "Price",
+        prod_desc: "Description (optional)", prod_image: "Photo (optional, PNG/JPG/WEBP, max 2MB)",
+        add_product: "Add product", delete: "Delete", delete_confirm: "Delete this product?",
+        product_added: "Product added", product_deleted: "Product deleted",
+        bad_title: "Enter a product name (2 to 100 characters).", bad_price: "Enter a valid price (greater than 0).",
+        bad_image: "Image not allowed. Use PNG, JPG or WEBP.", image_big: "Image is too large (max 2MB).",
+        no_products: "No products yet. Products added by sellers will appear here.",
+        price_unavailable: "This product's price can't be converted right now. Please try later.",
+        chat_interest: "Hello, I'm interested in ",
+        pick_country: "Please choose a country.",
+        bad_email: "Incorrect email. Please use a Gmail address, e.g. name@gmail.com",
+        balance: "Balance", deposit: "Deposit",
+        deposit_title: "Deposit funds", amount: "Amount",
+        method: "Payment method", m_momo: "MTN Mobile Money", m_airtel: "Airtel Money",
+        m_card: "Card (Visa/Mastercard)", confirm_deposit: "Continue to payment", cancel: "Cancel",
+        buy: "Buy", bought: "Purchased",
+        low_balance: "Insufficient balance. Please deposit funds first.",
+        bad_amount: "Enter a valid amount.", between: "Between",
+        history: "History", deposit_done: "Deposit made", tx_deposit: "Deposit", tx_purchase: "Purchase",
+        role: "I am a", role_buyer: "Buyer", role_seller: "Seller",
+        shop_name: "Your shop name", shop_required: "Enter your shop name.",
+        chat_btn: "Chat with seller", chat_title: "Chat with", type_msg: "Type a message...",
+        send: "Send", inbox: "Messages", no_threads: "No messages yet.", back: "← Back",
+        chat_empty: "No messages yet. Start the conversation!",
+        f1_t: "Trusted marketplace",
+        f1_d: "Real sellers, real products.",
+        f2_t: "Chat with the seller",
+        f2_d: "Ask anything before you buy.",
+        f3_t: "Worldwide",
+        f3_d: "Prices in your own currency.",
+        f4_t: "Easy shopping",
+        f4_d: "Deposit funds and buy instantly.",
+        pay_note: "You will continue to Flutterwave's secure payment page and pay with your own real money: MTN/Airtel Mobile Money or Visa/Mastercard. Your phone number, PIN and card details never reach our server.",
+        pay_redirect: "Redirecting to payment...",
+        pay_unconfigured: "Payments are not set up yet by the site owner (no Flutterwave key).",
+        pay_error: "Payment could not be started right now. Please try later.",
+        pay_success: "Payment successful! Your wallet has been topped up.",
+        pay_failed: "Payment failed. Nothing was charged or added.",
+        pay_cancelled: "You cancelled the payment.",
+        pay_pending: "Payment is still being confirmed. Your balance will update shortly.",
+        confirm_buy: "Buy",
+        tx_sale: "Sale",
+        chat_error: "Message not sent. Check that the server (python app.py) is running."
+      },
+      fr: {
+        nav_products: "Produits",
+        hero_title: "Achetez et vendez dans le monde entier",
+        hero_text: "Met en relation vendeurs et acheteurs, qui peuvent discuter et payer en ligne.",
+        search_placeholder: "Rechercher des produits...", search_btn: "Rechercher",
+        products_title: "Produits", no_results: "Aucun produit trouvé.",
+        footer: "© 2026 SKY ONLINE SHOP",
+        login_title: "Connexion", gate_text: "Connectez-vous pour voir les produits.",
+        email: "E-mail", password: "Mot de passe (8 caractères min.)",
+        country: "Votre pays", choose_country: "Choisissez un pays...",
+        submit: "Se connecter", logout: "Déconnexion", hello: "Bonjour",
+        price_note: "Les prix sont affichés dans la devise de votre pays (", price_note_end: "). Ce sont des estimations.",
+        price_note_usd: "Le taux de change de la devise de votre pays n'est pas disponible pour le moment ; les prix sont affichés en dollars (USD).",
+        tab_login: "Connexion", tab_signup: "Inscription", signup_title: "Créer un compte", signup_btn: "Créer le compte",
+        email_exists: "Cet e-mail a déjà un compte. Utilisez « Connexion ».",
+        shop_exists: "Ce nom de boutique est déjà pris. Choisissez-en un autre.",
+        bad_login: "E-mail ou mot de passe incorrect. Si vous n'avez pas de compte, choisissez « Inscription ».",
+        bad_password: "Le mot de passe doit contenir au moins 8 caractères.",
+        server_error: "Serveur injoignable. Vérifiez que « python app.py » fonctionne.",
+        identifier: "E-mail ou téléphone (+250...)", phone_label: "Téléphone (facultatif) : +250788123456",
+        bad_identifier: "Saisissez une adresse Gmail ou un numéro commençant par + (ex. +250788123456).",
+        bad_phone: "Numéro invalide. Commencez par + (ex. +250788123456).",
+        phone_exists: "Ce numéro a déjà un compte. Utilisez « Connexion ».",
+        sell_title: "Ajouter un produit à vendre", prod_title: "Nom du produit", prod_price: "Prix",
+        prod_desc: "Description (facultatif)", prod_image: "Photo (facultatif, PNG/JPG/WEBP, 2 Mo max)",
+        add_product: "Ajouter", delete: "Supprimer", delete_confirm: "Supprimer ce produit ?",
+        product_added: "Produit ajouté", product_deleted: "Produit supprimé",
+        bad_title: "Saisissez le nom du produit (2 à 100 caractères).", bad_price: "Saisissez un prix valide (supérieur à 0).",
+        bad_image: "Image non autorisée. Utilisez PNG, JPG ou WEBP.", image_big: "Image trop volumineuse (2 Mo max).",
+        no_products: "Aucun produit pour le moment. Les produits ajoutés par les vendeurs apparaîtront ici.",
+        price_unavailable: "Le prix de ce produit ne peut pas être converti pour le moment. Réessayez plus tard.",
+        chat_interest: "Bonjour, je suis intéressé par ",
+        pick_country: "Veuillez choisir un pays.",
+        bad_email: "E-mail incorrect. Utilisez une adresse Gmail, par ex. nom@gmail.com",
+        balance: "Solde", deposit: "Déposer",
+        deposit_title: "Déposer des fonds", amount: "Montant",
+        method: "Moyen de paiement", m_momo: "MTN Mobile Money", m_airtel: "Airtel Money",
+        m_card: "Carte (Visa/Mastercard)", confirm_deposit: "Continuer vers le paiement", cancel: "Annuler",
+        buy: "Acheter", bought: "Acheté",
+        low_balance: "Solde insuffisant. Veuillez d'abord déposer des fonds.",
+        bad_amount: "Saisissez un montant valide.", between: "Entre",
+        history: "Historique", deposit_done: "Dépôt effectué", tx_deposit: "Dépôt", tx_purchase: "Achat",
+        role: "Je suis", role_buyer: "Acheteur", role_seller: "Vendeur",
+        shop_name: "Nom de votre boutique", shop_required: "Saisissez le nom de votre boutique.",
+        chat_btn: "Discuter avec le vendeur", chat_title: "Discussion avec", type_msg: "Écrivez un message...",
+        send: "Envoyer", inbox: "Messages", no_threads: "Aucun message pour le moment.", back: "← Retour",
+        chat_empty: "Aucun message. Commencez la discussion !",
+        f1_t: "Marché de confiance",
+        f1_d: "Vrais vendeurs, vrais produits.",
+        f2_t: "Discutez avec le vendeur",
+        f2_d: "Posez vos questions avant d'acheter.",
+        f3_t: "Dans le monde entier",
+        f3_d: "Prix dans votre devise.",
+        f4_t: "Achats faciles",
+        f4_d: "Déposez des fonds et achetez aussitôt.",
+        pay_note: "Vous continuerez vers la page de paiement sécurisée de Flutterwave et paierez avec votre argent réel : MTN/Airtel Mobile Money ou Visa/Mastercard. Votre numéro, code PIN et carte n'atteignent jamais notre serveur.",
+        pay_redirect: "Redirection vers le paiement...",
+        pay_unconfigured: "Les paiements ne sont pas encore configurés par le propriétaire du site (pas de clé Flutterwave).",
+        pay_error: "Le paiement n'a pas pu démarrer. Réessayez plus tard.",
+        pay_success: "Paiement réussi ! Votre portefeuille a été crédité.",
+        pay_failed: "Paiement échoué. Rien n'a été débité ni ajouté.",
+        pay_cancelled: "Vous avez annulé le paiement.",
+        pay_pending: "Le paiement est en cours de confirmation. Votre solde sera mis à jour bientôt.",
+        confirm_buy: "Acheter",
+        tx_sale: "Vente",
+        chat_error: "Message non envoyé. Vérifiez que le serveur (python app.py) fonctionne."
+      },
+      sw: {
+        nav_products: "Bidhaa",
+        hero_title: "Nunua na uuze duniani kote",
+        hero_text: "Inaunganisha wauzaji na wanunuzi, wanaoweza kuzungumza na kulipa mtandaoni.",
+        search_placeholder: "Tafuta bidhaa...", search_btn: "Tafuta",
+        products_title: "Bidhaa", no_results: "Hakuna bidhaa zilizopatikana.",
+        footer: "© 2026 SKY ONLINE SHOP",
+        login_title: "Ingia", gate_text: "Ingia ili uone bidhaa.",
+        email: "Barua pepe", password: "Nenosiri (angalau herufi 8)",
+        country: "Nchi yako", choose_country: "Chagua nchi...",
+        submit: "Ingia", logout: "Toka", hello: "Habari",
+        price_note: "Bei zinaonyeshwa kwa sarafu ya nchi yako (", price_note_end: "). Ni makadirio.",
+        price_note_usd: "Kiwango cha ubadilishaji cha sarafu ya nchi yako hakipatikani sasa; bei zinaonyeshwa kwa dola (USD).",
+        tab_login: "Ingia", tab_signup: "Jisajili", signup_title: "Fungua akaunti", signup_btn: "Fungua akaunti",
+        email_exists: "Barua pepe hii tayari ina akaunti. Tafadhali tumia \"Ingia\".",
+        shop_exists: "Jina hili la duka tayari linatumika. Chagua lingine.",
+        bad_login: "Barua pepe au nenosiri si sahihi. Kama huna akaunti, chagua \"Jisajili\".",
+        bad_password: "Nenosiri lazima liwe na angalau herufi 8.",
+        server_error: "Seva haipatikani. Hakikisha \"python app.py\" inafanya kazi.",
+        identifier: "Barua pepe au simu (+250...)", phone_label: "Simu (si lazima): +250788123456",
+        bad_identifier: "Weka anwani ya Gmail au namba ya simu inayoanza na + (mfano +250788123456).",
+        bad_phone: "Namba ya simu si sahihi. Anza na + (mfano +250788123456).",
+        phone_exists: "Namba hii ya simu tayari ina akaunti. Tafadhali tumia \"Ingia\".",
+        sell_title: "Weka bidhaa unayotaka kuuza", prod_title: "Jina la bidhaa", prod_price: "Bei",
+        prod_desc: "Maelezo (si lazima)", prod_image: "Picha (si lazima, PNG/JPG/WEBP, isizidi 2MB)",
+        add_product: "Weka bidhaa", delete: "Futa", delete_confirm: "Futa bidhaa hii?",
+        product_added: "Bidhaa imewekwa", product_deleted: "Bidhaa imefutwa",
+        bad_title: "Weka jina la bidhaa (herufi 2 hadi 100).", bad_price: "Weka bei sahihi (zaidi ya 0).",
+        bad_image: "Picha hairuhusiwi. Tumia PNG, JPG au WEBP.", image_big: "Picha ni kubwa mno (isizidi 2MB).",
+        no_products: "Hakuna bidhaa bado. Bidhaa zitakazowekwa na wauzaji zitaonekana hapa.",
+        price_unavailable: "Bei ya bidhaa hii haiwezi kubadilishwa sasa. Jaribu baadaye.",
+        chat_interest: "Habari, nimependa ",
+        pick_country: "Tafadhali chagua nchi.",
+        bad_email: "Barua pepe si sahihi (incorrect email). Tumia anwani ya Gmail, mfano jina@gmail.com",
+        balance: "Salio", deposit: "Weka pesa",
+        deposit_title: "Weka pesa (Deposit)", amount: "Kiasi",
+        method: "Njia ya malipo", m_momo: "MTN Mobile Money", m_airtel: "Airtel Money",
+        m_card: "Kadi (Visa/Mastercard)", confirm_deposit: "Endelea kulipa", cancel: "Ghairi",
+        buy: "Nunua", bought: "Umenunua",
+        low_balance: "Salio halitoshi. Tafadhali weka pesa kwanza.",
+        bad_amount: "Weka kiasi sahihi.", between: "Kati ya",
+        history: "Historia", deposit_done: "Umeweka pesa", tx_deposit: "Amana", tx_purchase: "Ununuzi",
+        role: "Mimi ni", role_buyer: "Mnunuzi", role_seller: "Muuzaji",
+        shop_name: "Jina la duka lako", shop_required: "Weka jina la duka lako.",
+        chat_btn: "Ongea na muuzaji", chat_title: "Mazungumzo na", type_msg: "Andika ujumbe...",
+        send: "Tuma", inbox: "Ujumbe", no_threads: "Hakuna ujumbe bado.", back: "← Rudi",
+        chat_empty: "Hakuna ujumbe. Anza mazungumzo!",
+        f1_t: "Soko la kuaminika",
+        f1_d: "Wauzaji halisi, bidhaa halisi.",
+        f2_t: "Ongea na muuzaji",
+        f2_d: "Uliza chochote kabla ya kununua.",
+        f3_t: "Duniani kote",
+        f3_d: "Bei kwa sarafu yako.",
+        f4_t: "Ununuzi rahisi",
+        f4_d: "Weka pesa na ununue mara moja.",
+        pay_note: "Utaendelea kwenye ukurasa salama wa malipo wa Flutterwave na kulipa kwa pesa zako halisi: MTN/Airtel Mobile Money au Visa/Mastercard. Namba yako, PIN na kadi havifiki kwenye seva yetu.",
+        pay_redirect: "Inakupeleka kulipa...",
+        pay_unconfigured: "Malipo bado hayajawekwa na mmiliki wa tovuti (hakuna ufunguo wa Flutterwave).",
+        pay_error: "Malipo hayakuweza kuanza sasa. Jaribu baadaye.",
+        pay_success: "Malipo yamefanikiwa! Pochi yako imeongezwa.",
+        pay_failed: "Malipo hayakufanikiwa. Hakuna kilichokatwa wala kuongezwa.",
+        pay_cancelled: "Umeghairi malipo.",
+        pay_pending: "Malipo bado yanathibitishwa. Salio lako litasasishwa hivi karibuni.",
+        confirm_buy: "Nunua",
+        tx_sale: "Mauzo",
+        chat_error: "Ujumbe haujatumwa. Hakikisha seva (python app.py) inafanya kazi."
+      }
+    };
+
+    // ---------- Ibihugu n'amafaranga ----------
+    // Ibihugu byose (ISO 3166) n'ifaranga ryabyo (ISO 4217): "CODE:IFARANGA".
+    // Amazina y'ibihugu afatwa na browser mu rurimi rwatoranyijwe (Intl.DisplayNames).
+    const COUNTRY_DATA = "AF:AFN,AX:EUR,AL:ALL,DZ:DZD,AS:USD,AD:EUR,AO:AOA,AI:XCD,AG:XCD,AR:ARS,AM:AMD,AW:AWG,AU:AUD,AT:EUR,AZ:AZN,BS:BSD,BH:BHD,BD:BDT,BB:BBD,BY:BYN,BE:EUR,BZ:BZD,BJ:XOF,BM:BMD,BT:BTN,BO:BOB,BQ:USD,BA:BAM,BW:BWP,BR:BRL,IO:USD,VG:USD,BN:BND,BG:EUR,BF:XOF,BI:BIF,KH:KHR,CM:XAF,CA:CAD,CV:CVE,KY:KYD,CF:XAF,TD:XAF,CL:CLP,CN:CNY,CX:AUD,CC:AUD,CO:COP,KM:KMF,CG:XAF,CD:CDF,CK:NZD,CR:CRC,CI:XOF,HR:EUR,CU:CUP,CW:ANG,CY:EUR,CZ:CZK,DK:DKK,DJ:DJF,DM:XCD,DO:DOP,EC:USD,EG:EGP,SV:USD,GQ:XAF,ER:ERN,EE:EUR,SZ:SZL,ET:ETB,FK:FKP,FO:DKK,FJ:FJD,FI:EUR,FR:EUR,GF:EUR,PF:XPF,GA:XAF,GM:GMD,GE:GEL,DE:EUR,GH:GHS,GI:GIP,GR:EUR,GL:DKK,GD:XCD,GP:EUR,GU:USD,GT:GTQ,GG:GBP,GN:GNF,GW:XOF,GY:GYD,HT:HTG,HN:HNL,HK:HKD,HU:HUF,IS:ISK,IN:INR,ID:IDR,IR:IRR,IQ:IQD,IE:EUR,IM:GBP,IL:ILS,IT:EUR,JM:JMD,JP:JPY,JE:GBP,JO:JOD,KZ:KZT,KE:KES,KI:AUD,XK:EUR,KW:KWD,KG:KGS,LA:LAK,LV:EUR,LB:LBP,LS:LSL,LR:LRD,LY:LYD,LI:CHF,LT:EUR,LU:EUR,MO:MOP,MG:MGA,MW:MWK,MY:MYR,MV:MVR,ML:XOF,MT:EUR,MH:USD,MQ:EUR,MR:MRU,MU:MUR,YT:EUR,MX:MXN,FM:USD,MD:MDL,MC:EUR,MN:MNT,ME:EUR,MS:XCD,MA:MAD,MZ:MZN,MM:MMK,NA:NAD,NR:AUD,NP:NPR,NL:EUR,NC:XPF,NZ:NZD,NI:NIO,NE:XOF,NG:NGN,NU:NZD,NF:AUD,KP:KPW,MK:MKD,MP:USD,NO:NOK,OM:OMR,PK:PKR,PW:USD,PS:ILS,PA:PAB,PG:PGK,PY:PYG,PE:PEN,PH:PHP,PN:NZD,PL:PLN,PT:EUR,PR:USD,QA:QAR,RE:EUR,RO:RON,RU:RUB,RW:RWF,WS:WST,SM:EUR,ST:STN,SA:SAR,SN:XOF,RS:RSD,SC:SCR,SL:SLE,SG:SGD,SX:ANG,SK:EUR,SI:EUR,SB:SBD,SO:SOS,ZA:ZAR,KR:KRW,SS:SSP,ES:EUR,LK:LKR,BL:EUR,SH:SHP,KN:XCD,LC:XCD,MF:EUR,PM:EUR,VC:XCD,SD:SDG,SR:SRD,SE:SEK,CH:CHF,SY:SYP,TW:TWD,TJ:TJS,TZ:TZS,TH:THB,TL:USD,TG:XOF,TK:NZD,TO:TOP,TT:TTD,TN:TND,TR:TRY,TM:TMT,TC:USD,TV:AUD,UG:UGX,UA:UAH,AE:AED,GB:GBP,US:USD,UY:UYU,VI:USD,UZ:UZS,VU:VUV,VA:EUR,VE:VES,VN:VND,WF:XPF,EH:MAD,YE:YER,ZM:ZMW,ZW:ZWG";
+    const COUNTRIES = COUNTRY_DATA.split(",").map(pair => {
+      const parts = pair.split(":");
+      return { code: parts[0], cur: parts[1] };
+    });
+
+    // RATES = amafaranga angahe kuri 1 USD. Aya ni ibigereranyo by'agateganyo;
+    // iyo seriveri ibonye ibiciro nyabyo (/api/rates), bisimbura ibi byose.
+    const RATES = {
+      USD: 1, RWF: 1450, BIF: 2950, CDF: 2300, KES: 129, UGX: 3600, TZS: 2600,
+      ETB: 140, NGN: 1500, GHS: 12, ZAR: 18, CAD: 1.37, GBP: 0.78, EUR: 0.92,
+      INR: 84, CNY: 7.2, JPY: 150, AED: 3.67
+    };
+
+    // ---------- Ububiko bw'amakuru (muri browser) ----------
+    function load(key, fallback) {
+      try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
+    }
+    function save(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+    }
+
+    let lang = load("lang", "rw");
+    let user = null;               // { email, country, role, shop } - ivuye kuri seriveri (database)
+    let authChecked = false;       // yamaze kubaza seriveri niba winjiye?
+    let mode = "login";            // "login" cyangwa "signup"
+    try { localStorage.removeItem("user"); } catch (e) {}
+    let walletState = { currency: "", balance: 0, tx: [] }; // ivuye kuri seriveri (amafaranga nyayo)
+
+    function t(key) {
+      return (translations[lang] && translations[lang][key]) || translations.rw[key] || key;
+    }
+
+    function isSeller() {
+      return !!user && user.role === "SELLER";
+    }
+
+    function countryOf(code) {
+      return COUNTRIES.find(c => c.code === code);
+    }
+
+    // Ifaranga ry'igihugu (nubwo ritaboneka mu biciro)
+    function countryCurrency() {
+      const c = user && countryOf(user.country);
+      return c ? c.cur : "USD";
+    }
+
+    // Ifaranga rikoreshwa kugaragaza ibiciro: niba nta gipimo cyaryo, dukoresha USD
+    function currentCurrency() {
+      const cur = countryCurrency();
+      return RATES[cur] ? cur : "USD";
+    }
+
+    let regionNames = null, regionNamesLang = "";
+    function regionName(code) {
+      try {
+        if (!regionNames || regionNamesLang !== lang) {
+          regionNames = new Intl.DisplayNames([lang], { type: "region" });
+          regionNamesLang = lang;
+        }
+        return regionNames.of(code) || code;
+      } catch (e) {
+        return code;
+      }
+    }
+
+    function fmtAmount(amount, cur) {
+      try {
+        return new Intl.NumberFormat(undefined, { style: "currency", currency: cur }).format(amount);
+      } catch (e) {
+        return amount.toFixed(2) + " " + cur;
+      }
+    }
+
+    function formatPrice(usd) {
+      const cur = currentCurrency();
+      return fmtAmount(usd * (RATES[cur] || 1), cur);
+    }
+
+    // Igiciro cy'igicuruzwa mu madolari (null niba ifaranga ry'umugurisha ritari mu biciro)
+    function productUSD(p) {
+      const rate = RATES[p.currency];
+      return rate ? p.price / rate : null;
+    }
+
+    // Igiciro kigaragazwa umukoresha: mu ifaranga rye iyo bishoboka, ubundi mu ry'umugurisha
+    function productPriceText(p) {
+      const cur = currentCurrency();
+      if (p.currency === cur) return fmtAmount(p.price, cur);
+      const usd = productUSD(p);
+      return usd !== null ? formatPrice(usd) : fmtAmount(p.price, p.currency);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+    }
+
+    // ---------- Amafaranga y'umukoresha (wallet) ----------
+    // Amafaranga nyayo abikwa kuri seriveri (database), si muri browser. Browser irayasoma gusa.
+    function walletCur() { return walletState.currency || countryCurrency(); }
+    async function loadWallet() {
+      if (!user) return;
+      try {
+        const res = await fetch("/api/wallet");
+        if (!res.ok) return;
+        walletState = await res.json();
+        renderAuth();
+        const open = document.getElementById("depositOverlay").classList.contains("open");
+        if (open) refreshDepositView();
+      } catch (e) {}
+    }
+
+    let toastTimer;
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 3500);
+    }
+
+    // ---------- Kwerekana form cyangwa ibicuruzwa ----------
+    function updateView() {
+      const loggedIn = !!user;
+      document.getElementById("gate").style.display = (loggedIn || !authChecked) ? "none" : "flex";
+      document.getElementById("app").style.display = loggedIn ? "block" : "none";
+      document.getElementById("navProducts").style.display = loggedIn ? "inline" : "none";
+      document.getElementById("sellerPanel").style.display = isSeller() ? "block" : "none";
+      document.getElementById("priceLabel").textContent = t("prod_price") + " (" + countryCurrency() + ")";
+      renderAuth();
+      renderNote();
+      render();
+    }
+
+    // ---------- Indimi ----------
+    function applyLang() {
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        el.textContent = t(el.dataset.i18n);
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        el.placeholder = t(el.dataset.i18nPlaceholder);
+      });
+      document.getElementById("lang").value = lang;
+      renderMode();
+      buildCountryOptions();
+      updateView();
+    }
+
+    document.getElementById("lang").addEventListener("change", e => {
+      lang = translations[e.target.value] ? e.target.value : "rw";
+      save("lang", lang);
+      applyLang();
+    });
+
+    // ---------- Kwinjira ----------
+    function buildCountryOptions() {
+      const sel = document.getElementById("country");
+      const chosen = sel.value || (user ? user.country : "");
+      sel.innerHTML = '<option value="">' + t("choose_country") + "</option>" +
+        COUNTRIES.map(c => ({ code: c.code, cur: c.cur, name: regionName(c.code) }))
+          .sort((a, b) => {
+            try { return a.name.localeCompare(b.name, lang); } catch (e) { return a.name < b.name ? -1 : 1; }
+          })
+          .map(c => '<option value="' + c.code + '">' + escapeHtml(c.name) + " (" + c.cur + ")</option>").join("");
+      sel.value = chosen;
+    }
+
+    function renderAuth() {
+      const area = document.getElementById("authArea");
+      if (!user) { area.innerHTML = ""; return; }
+      const c = countryOf(user.country);
+      const label = (c ? escapeHtml(regionName(c.code)) + " · " + c.cur : "") + (isSeller() ? " · " + escapeHtml(user.shop) : "");
+      const initial = escapeHtml((user.email || "?").charAt(0));
+      let html = '<span class="userwrap"><button type="button" class="avatar" id="avatarBtn" translate="no" aria-label="Account">' + initial + "</button>" +
+        '<div class="usermenu" id="userMenu"><div class="em" translate="no">' + escapeHtml(user.email) + '</div><div class="meta">' + label + "</div></div></span> ";
+      html += '<span class="balance">' + t("balance") + ": " + fmtAmount(walletState.balance, walletCur()) + "</span> ";
+      if (isSeller()) {
+        html += '<button class="small" id="inboxBtn">' + t("inbox") + "</button> ";
+      } else {
+        html += '<button class="small" id="depositBtn">' + t("deposit") + "</button> ";
+      }
+      html += '<button class="ghost small" id="logoutBtn">' + t("logout") + "</button>";
+      area.innerHTML = html;
+      document.getElementById("avatarBtn").addEventListener("click", () => {
+        document.getElementById("userMenu").classList.toggle("open");
+      });
+      if (isSeller()) {
+        document.getElementById("inboxBtn").addEventListener("click", openInbox);
+      } else {
+        document.getElementById("depositBtn").addEventListener("click", openDeposit);
+      }
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        closeDeposit();
+        chatClose();
+        fetch("/api/logout", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })
+          .catch(() => {})
+          .finally(() => { user = null; products = []; walletState = { currency: "", balance: 0, tx: [] }; setMode("login"); updateView(); });
+      });
+    }
+
+    // Kanda ahandi hose kugira ngo menu y'umukoresha ifunge
+    document.addEventListener("click", e => {
+      const m = document.getElementById("userMenu");
+      if (m && !e.target.closest(".userwrap")) m.classList.remove("open");
+    });
+
+    function renderNote() {
+      const note = document.getElementById("priceNote");
+      if (!user) { note.textContent = ""; return; }
+      note.textContent = currentCurrency() === countryCurrency()
+        ? t("price_note") + currentCurrency() + t("price_note_end")
+        : t("price_note_usd");
+    }
+
+    document.getElementById("role").addEventListener("change", e => {
+      document.getElementById("shopField").style.display = e.target.value === "SELLER" ? "block" : "none";
+    });
+
+    document.getElementById("email").addEventListener("input", () => {
+      document.getElementById("formError").textContent = "";
+    });
+
+    // Guhindura hagati ya "Kwinjira" (log in) na "Kwiyandikisha" (sign up)
+    function renderMode() {
+      const signup = mode === "signup";
+      document.getElementById("signupFields").style.display = signup ? "block" : "none";
+      document.getElementById("tabLogin").classList.toggle("active", !signup);
+      document.getElementById("tabSignup").classList.toggle("active", signup);
+      document.getElementById("gateTitle").textContent = t(signup ? "signup_title" : "login_title");
+      document.getElementById("emailLabel").textContent = t(signup ? "email" : "identifier");
+      document.getElementById("submitBtn").textContent = t(signup ? "signup_btn" : "submit");
+      document.getElementById("password").autocomplete = signup ? "new-password" : "current-password";
+    }
+
+    function setMode(m) {
+      mode = m === "signup" ? "signup" : "login";
+      document.getElementById("formError").textContent = "";
+      renderMode();
+    }
+
+    document.getElementById("tabLogin").addEventListener("click", () => setMode("login"));
+    document.getElementById("tabSignup").addEventListener("click", () => setMode("signup"));
+
+    async function sendAuth(url, payload) {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      let data = {};
+      try { data = await res.json(); } catch (e) {}
+      return { ok: res.ok, status: res.status, data: data };
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const errBox = document.getElementById("formError");
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const phoneRe = /^\+[1-9]\d{7,14}$/;
+      const cleanPhone = v => {
+        let s = String(v || "").replace(/[\s\-().]/g, "");
+        if (s.startsWith("00")) s = "+" + s.slice(2);
+        return s;
+      };
+      if (password.length < 8) { errBox.textContent = t("bad_password"); return; }
+
+      let url = "/api/login";
+      let payload;
+      if (mode === "login") {
+        // Email (Gmail) CYANGWA nomero ya telefoni (+250...)
+        if (email.indexOf("@") !== -1) {
+          if (!/^[A-Za-z0-9._%+-]+@gmail\.com$/i.test(email)) { errBox.textContent = t("bad_email"); return; }
+          payload = { identifier: email, password: password };
+        } else {
+          const ph = cleanPhone(email);
+          if (!phoneRe.test(ph)) { errBox.textContent = t("bad_identifier"); return; }
+          payload = { identifier: ph, password: password };
+        }
+      }
+      if (mode === "signup") {
+        // Kwiyandikisha: email ya Gmail irakenewe, telefoni ni nyongera
+        if (!/^[A-Za-z0-9._%+-]+@gmail\.com$/i.test(email)) { errBox.textContent = t("bad_email"); return; }
+        const phone = cleanPhone(document.getElementById("phone").value);
+        if (phone && !phoneRe.test(phone)) { errBox.textContent = t("bad_phone"); return; }
+        const country = document.getElementById("country").value;
+        const role = document.getElementById("role").value === "SELLER" ? "SELLER" : "BUYER";
+        const shop = document.getElementById("shopName").value.trim().replace(/\s+/g, " ");
+        if (!country) { errBox.textContent = t("pick_country"); return; }
+        if (role === "SELLER" && (shop.length < 2 || shop.length > 80)) { errBox.textContent = t("shop_required"); return; }
+        url = "/api/signup";
+        payload = { email: email, phone: phone, password: password, country: country, role: role, shop: role === "SELLER" ? shop : "" };
+      }
+
+      const btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      try {
+        const r = await sendAuth(url, payload);
+        if (r.ok && r.data && r.data.user) {
+          user = r.data.user;
+          document.getElementById("password").value = "";
+          document.getElementById("phone").value = "";
+          errBox.textContent = "";
+          updateView();
+          loadProducts();
+          loadWallet();
+          return;
+        }
+        const code = r.data && r.data.error;
+        if (code === "email_exists") {
+          // Email isanzwe ifite konti: dusubiza umuntu kuri "Kwinjira" (log in)
+          setMode("login");
+          errBox.textContent = t("email_exists");
+        } else if (code === "phone_exists") {
+          setMode("login");
+          errBox.textContent = t("phone_exists");
+        } else if (code === "bad_phone") {
+          errBox.textContent = t("bad_phone");
+        } else if (code === "shop_exists") {
+          errBox.textContent = t("shop_exists");
+        } else if (code === "bad_login") {
+          errBox.textContent = t("bad_login");
+        } else if (code === "bad_email") {
+          errBox.textContent = t("bad_email");
+        } else if (code === "bad_password") {
+          errBox.textContent = t("bad_password");
+        } else if (code === "bad_country") {
+          errBox.textContent = t("pick_country");
+        } else if (code === "bad_shop") {
+          errBox.textContent = t("shop_required");
+        } else {
+          errBox.textContent = t("server_error");
+        }
+      } catch (err) {
+        errBox.textContent = t("server_error");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // ---------- Gushyiramo amafaranga nyayo (Deposit) ----------
+    // Kwishyura bikorerwa kuri paji y'umutekano ya Flutterwave (Mobile Money cyangwa ikarita).
+    // Numero ya telefoni, PIN n'amakuru y'ikarita ntibinyura kuri seriveri yacu.
+    function renderHistory() {
+      const list = walletState.tx.slice(0, 5);
+      document.getElementById("hist").innerHTML = list.length
+        ? "<strong>" + t("history") + "</strong>" + list.map(x =>
+            "<div><span>" + new Date(x.created * 1000).toLocaleString() + " · " + t("tx_" + x.kind) +
+            (x.title ? ": " + escapeHtml(x.title) : "") +
+            "</span><span>" + (x.amount >= 0 ? "+" : "-") + fmtAmount(Math.abs(x.amount), x.currency) + "</span></div>").join("")
+        : "";
+    }
+
+    function refreshDepositView() {
+      document.getElementById("amountCur").textContent = "(" + walletCur() + ")";
+      document.getElementById("depBalance").textContent = fmtAmount(walletState.balance, walletCur());
+      renderHistory();
+    }
+
+    function openDeposit() {
+      if (!user || isSeller()) return;
+      document.getElementById("depositError").textContent = "";
+      document.getElementById("amount").value = "";
+      refreshDepositView();
+      document.getElementById("depositOverlay").classList.add("open");
+      document.getElementById("amount").focus();
+      loadWallet();
+    }
+
+    function closeDeposit() {
+      document.getElementById("depositOverlay").classList.remove("open");
+    }
+
+    document.getElementById("depCancel").addEventListener("click", closeDeposit);
+    document.getElementById("depositOverlay").addEventListener("click", e => {
+      if (e.target.id === "depositOverlay") closeDeposit();
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeDeposit();
+    });
+
+    document.getElementById("depositForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      if (!user || isSeller()) return;
+      const errBox = document.getElementById("depositError");
+      errBox.textContent = "";
+      const amount = parseFloat(document.getElementById("amount").value);
+      if (!isFinite(amount) || amount <= 0) { errBox.textContent = t("bad_amount"); return; }
+      const btn = e.target.querySelector("button[type=submit]");
+      btn.disabled = true;
+      try {
+        const res = await fetch("/api/deposit/start", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: amount })
+        });
+        let data = {};
+        try { data = await res.json(); } catch (err) {}
+        if (res.ok && data.link) {
+          toast(t("pay_redirect"));
+          window.location.href = data.link;     // paji y'umutekano ya Flutterwave
+          return;
+        }
+        if (data.error === "bad_amount") {
+          const cur = walletCur();
+          const lo = fmtAmount(1 * (RATES[cur] || 1), cur), hi = fmtAmount(10000 * (RATES[cur] || 1), cur);
+          errBox.textContent = t("bad_amount") + " " + t("between") + " " + lo + " - " + hi;
+        } else if (data.error === "payments_not_configured") {
+          errBox.textContent = t("pay_unconfigured");
+        } else {
+          errBox.textContent = t("pay_error");
+        }
+      } catch (err) {
+        errBox.textContent = t("server_error");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // ---------- Chat hagati y'umuguzi n'umugurisha ----------
+    // Ubutumwa bubikwa kuri seriveri (app.py, SQLite). Browser ibaza ubutumwa bushya buri masegonda 3.
+    let chat = null;      // { shop, buyer, lastId, loaded }
+    let chatTimer = null;
+    let chatMode = "";    // "conv" (ikiganiro) cyangwa "inbox" (urutonde rw'ibiganiro by'umugurisha)
+
+    function chatEl(id) { return document.getElementById(id); }
+    function myRole() { return isSeller() ? "seller" : "buyer"; }
+    function chatStopTimer() { if (chatTimer) { clearInterval(chatTimer); chatTimer = null; } }
+    function chatShowError(show) { chatEl("chatError").textContent = show ? t("chat_error") : ""; }
+
+    async function chatJson(url, options) {
+      const res = await fetch(url, options);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    }
+
+    function chatHint(id, text) {
+      const div = document.createElement("div");
+      div.id = id;
+      div.className = "muted";
+      div.textContent = text;
+      chatEl("chatBody").appendChild(div);
+    }
+
+    function chatClose() {
+      chatStopTimer();
+      chat = null;
+      chatMode = "";
+      chatEl("chatPanel").classList.remove("open");
+    }
+
+    // Umuguzi afungura ikiganiro n'iduka ry'igicuruzwa
+    function openChat(shopName, productTitle) {
+      if (!user || isSeller()) return;
+      startConversation(shopName, user.email, shopName);
+      // Tutegura ubutumwa bwa mbere bugaragaza igicuruzwa umuguzi ashaka
+      if (productTitle) chatEl("chatInput").value = t("chat_interest") + productTitle;
+    }
+
+    function startConversation(shop, buyer, title) {
+      chatStopTimer();
+      chatMode = "conv";
+      chat = { shop: shop, buyer: buyer, lastId: 0, loaded: false };
+      chatEl("chatTitle").textContent = t("chat_title") + " " + title;
+      chatEl("chatBody").innerHTML = "";
+      chatEl("chatBack").style.display = isSeller() ? "inline-block" : "none";
+      chatEl("chatForm").style.display = "flex";
+      chatShowError(false);
+      chatEl("chatPanel").classList.add("open");
+      pollMessages();
+      chatTimer = setInterval(pollMessages, 3000);
+      chatEl("chatInput").focus();
+    }
+
+    function appendMessages(list) {
+      if (!list.length) return;
+      const body = chatEl("chatBody");
+      const empty = chatEl("chatEmpty");
+      if (empty) empty.remove();
+      list.forEach(m => {
+        const div = document.createElement("div");
+        div.className = "msg" + (m.sender === myRole() ? " me" : "");
+        const text = document.createElement("div");
+        text.textContent = m.body; // textContent: nta HTML yemerewe, bityo ni umutekano
+        const time = document.createElement("time");
+        time.textContent = new Date(m.created * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        div.appendChild(text);
+        div.appendChild(time);
+        body.appendChild(div);
+      });
+      body.scrollTop = body.scrollHeight;
+    }
+
+    async function pollMessages() {
+      const c = chat;
+      if (!c || chatMode !== "conv") return;
+      try {
+        const data = await chatJson("/api/chat/messages?shop=" + encodeURIComponent(c.shop) +
+          "&buyer=" + encodeURIComponent(c.buyer) + "&after=" + c.lastId);
+        if (chat !== c) return;
+        chatShowError(false);
+        appendMessages(data.messages);
+        if (data.messages.length) c.lastId = data.messages[data.messages.length - 1].id;
+        if (!c.loaded) {
+          c.loaded = true;
+          if (!data.messages.length) chatHint("chatEmpty", t("chat_empty"));
+        }
+      } catch (e) {
+        if (chat === c) chatShowError(true);
+      }
+    }
+
+    chatEl("chatForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const c = chat;
+      const input = chatEl("chatInput");
+      const text = input.value.trim();
+      if (!c || !text) return;
+      try {
+        await chatJson("/api/chat/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ shop: c.shop, buyer: c.buyer, sender: myRole(), body: text })
+        });
+        input.value = "";
+        chatShowError(false);
+        await pollMessages();
+      } catch (err) {
+        chatShowError(true);
+      }
+    });
+
+    // Umugurisha: urutonde rw'ibiganiro by'iduka rye
+    async function openInbox() {
+      if (!user || !isSeller()) return;
+      chatStopTimer();
+      chat = null;
+      chatMode = "inbox";
+      chatEl("chatTitle").textContent = t("inbox") + " · " + user.shop;
+      chatEl("chatBack").style.display = "none";
+      chatEl("chatForm").style.display = "none";
+      chatEl("chatPanel").classList.add("open");
+      await refreshInbox();
+      if (chatMode === "inbox") chatTimer = setInterval(refreshInbox, 5000);
+    }
+
+    async function refreshInbox() {
+      if (chatMode !== "inbox") return;
+      try {
+        const data = await chatJson("/api/chat/threads?shop=" + encodeURIComponent(user.shop));
+        if (chatMode !== "inbox") return;
+        chatShowError(false);
+        chatEl("chatBody").innerHTML = "";
+        if (!data.threads.length) { chatHint("chatNoThreads", t("no_threads")); return; }
+        data.threads.forEach(th => {
+          const div = document.createElement("div");
+          div.className = "thread";
+          const name = document.createElement("strong");
+          name.textContent = th.buyer;
+          const last = document.createElement("small");
+          last.textContent = th.body;
+          div.appendChild(name);
+          div.appendChild(last);
+          div.addEventListener("click", () => startConversation(user.shop, th.buyer, th.buyer));
+          chatEl("chatBody").appendChild(div);
+        });
+      } catch (e) {
+        chatShowError(true);
+      }
+    }
+
+    chatEl("chatBack").addEventListener("click", openInbox);
+    chatEl("chatClose").addEventListener("click", chatClose);
+
+    // ---------- Ibicuruzwa (biva muri database) ----------
+    // Ibicuruzwa byose bishyirwaho n'abagurisha nyabo. Nta bicuruzwa by'ingero bihari.
+    let products = [];
+    let productsJson = "";
+
+    function loadProducts() {
+      if (!user) return Promise.resolve();
+      return fetch("/api/products")
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => {
+          const items = Array.isArray(data.items) ? data.items : [];
+          const json = JSON.stringify(items);
+          if (json !== productsJson) {   // dusubiramo gusa iyo hari igihindutse
+            productsJson = json;
+            products = items;
+            render();
+          }
+        })
+        .catch(() => {});
+    }
+
+    function render() {
+      const q = document.getElementById("q").value.toLowerCase();
+      const list = products.filter(p =>
+        p.title.toLowerCase().includes(q) || (p.description || "").toLowerCase().includes(q));
+      document.getElementById("grid").innerHTML = list.map(p => {
+        const idx = products.indexOf(p);
+        let actions = "";
+        if (isSeller()) {
+          if (p.mine) actions = `<button class="ghost del" data-id="${p.id}">${t("delete")}</button>`;
+        } else {
+          actions = `<button class="buy" data-idx="${idx}">${t("buy")}</button>
+            <button class="ghost chat-btn" data-idx="${idx}">${t("chat_btn")}</button>`;
+        }
+        return `
+        <div class="card">
+          <div class="thumb">${p.image ? `<img src="${escapeHtml(p.image)}" alt="" loading="lazy">` : "🛍️"}</div>
+          <div class="body">
+            <div class="title">${escapeHtml(p.title)}</div>
+            <div class="price">${escapeHtml(productPriceText(p))}</div>
+            ${p.description ? `<div class="desc">${escapeHtml(p.description)}</div>` : ""}
+            <div class="shop">${escapeHtml(p.shop)}</div>
+            ${actions}
+          </div>
+        </div>`;
+      }).join("");
+      const empty = document.getElementById("empty");
+      empty.textContent = products.length ? t("no_results") : t("no_products");
+      empty.style.display = list.length ? "none" : "block";
+    }
+
+    // Kugura, kuvugana n'umugurisha, no gusiba (umugurisha)
+    document.getElementById("grid").addEventListener("click", async e => {
+      if (!user) return;
+
+      const delBtn = e.target.closest("button.del");
+      if (delBtn) {
+        if (!isSeller() || !window.confirm(t("delete_confirm"))) return;
+        try {
+          const res = await fetch("/api/products/" + encodeURIComponent(delBtn.dataset.id), {
+            method: "DELETE", headers: { "X-Requested-With": "fetch" }
+          });
+          if (res.ok) toast(t("product_deleted")); else toast(t("server_error"));
+        } catch (err) { toast(t("server_error")); }
+        loadProducts();
+        return;
+      }
+      if (isSeller()) return;
+
+      const chatBtn = e.target.closest("button.chat-btn");
+      if (chatBtn) {
+        const cp = products[Number(chatBtn.dataset.idx)];
+        if (cp) openChat(cp.shop, cp.title);
+        return;
+      }
+
+      const btn = e.target.closest("button.buy");
+      if (!btn) return;
+      const p = products[Number(btn.dataset.idx)];
+      if (!p) return;
+      if (!window.confirm(t("confirm_buy") + " " + p.title + " - " + productPriceText(p) + " ?")) return;
+      btn.disabled = true;
+      try {
+        const res = await fetch("/api/buy", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ product_id: p.id })
+        });
+        let data = {};
+        try { data = await res.json(); } catch (err) {}
+        if (res.ok) {
+          toast(t("bought") + ": " + p.title + " (" + fmtAmount(data.charged, data.currency) + ")");
+        } else if (data.error === "insufficient_funds") {
+          toast(t("low_balance"));
+          openDeposit();
+        } else if (data.error === "price_unavailable") {
+          toast(t("price_unavailable"));
+        } else {
+          toast(t("server_error"));
+        }
+      } catch (err) {
+        toast(t("server_error"));
+      } finally {
+        btn.disabled = false;
+      }
+      loadWallet();
+    });
+
+    // Umugurisha ashyiraho igicuruzwa gishya (izina, igiciro, ibisobanuro, ifoto)
+    document.getElementById("productForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      if (!isSeller()) return;
+      const errBox = document.getElementById("productError");
+      errBox.textContent = "";
+      const title = document.getElementById("pTitle").value.trim().replace(/\s+/g, " ");
+      const price = parseFloat(document.getElementById("pPrice").value);
+      const file = document.getElementById("pImage").files[0];
+      if (title.length < 2 || title.length > 100) { errBox.textContent = t("bad_title"); return; }
+      if (!isFinite(price) || price <= 0) { errBox.textContent = t("bad_price"); return; }
+      if (file && file.size > 2 * 1024 * 1024) { errBox.textContent = t("image_big"); return; }
+
+      const fd = new FormData();
+      fd.append("title", title);
+      fd.append("price", String(price));
+      fd.append("currency", countryCurrency());
+      fd.append("description", document.getElementById("pDesc").value.trim());
+      if (file) fd.append("image", file);
+
+      const btn = e.target.querySelector("button[type=submit]");
+      btn.disabled = true;
+      try {
+        const res = await fetch("/api/products", { method: "POST", headers: { "X-Requested-With": "fetch" }, body: fd });
+        let data = {};
+        try { data = await res.json(); } catch (err) {}
+        if (res.ok) {
+          e.target.reset();
+          toast(t("product_added"));
+          await loadProducts();
+        } else if (res.status === 413 || data.error === "image_big") {
+          errBox.textContent = t("image_big");
+        } else if (data.error === "bad_title") {
+          errBox.textContent = t("bad_title");
+        } else if (data.error === "bad_price") {
+          errBox.textContent = t("bad_price");
+        } else if (data.error === "bad_image") {
+          errBox.textContent = t("bad_image");
+        } else {
+          errBox.textContent = t("server_error");
+        }
+      } catch (err) {
+        errBox.textContent = t("server_error");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // Umuguzi abona ibicuruzwa bishya buri masegonda 15 nta gusubiramo urupapuro
+    setInterval(() => { loadProducts(); loadWallet(); }, 15000);
+
+    // ---------- Ibiciro nyabyo by'ivunjisha (bivuye kuri seriveri) ----------
+    function loadLiveRates() {
+      fetch("/api/rates")
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => {
+          if (!data || !data.rates || typeof data.rates !== "object") return;
+          Object.keys(RATES).forEach(k => delete RATES[k]);
+          Object.keys(data.rates).forEach(k => {
+            const v = Number(data.rates[k]);
+            if (v > 0 && isFinite(v)) RATES[k] = v;
+          });
+          RATES.USD = 1;
+          document.getElementById("rateCredit").innerHTML =
+            '<a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a>';
+          updateView();
+        })
+        .catch(() => { /* dukomeza gukoresha ibigereranyo by'agateganyo */ });
+    }
+
+    // ---------- Indimi zose (Google Translate) ----------
+    // Indimi enye (rw, en, fr, sw) zanditswe n'intoki. Izindi zose zitabwaho na Google Translate.
+    function googleTranslateElementInit() {
+      try {
+        new google.translate.TranslateElement(
+          { pageLanguage: lang, layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false },
+          "google_translate_element"
+        );
+      } catch (e) {}
+    }
+    window.googleTranslateElementInit = googleTranslateElementInit;
+    (function () {
+      const sc = document.createElement("script");
+      sc.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      sc.async = true;
+      sc.onerror = function () {};
+      document.head.appendChild(sc);
+    })();
+
+    applyLang();
+    loadLiveRates();
+
+    // Baza seriveri niba umuntu asanzwe yinjiye (session ibitse muri cookie)
+    fetch("/api/me")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => { if (data && data.user) user = data.user; })
+      .catch(() => {})
+      .finally(() => {
+        authChecked = true; updateView(); loadProducts(); loadWallet();
+        // Nyuma yo kwishyura, Flutterwave isubiza umukiriya hano: /?payment=success|failed|cancelled|pending
+        try {
+          const r = new URLSearchParams(location.search).get("payment");
+          if (r) {
+            history.replaceState(null, "", location.pathname);
+            const key = { success: "pay_success", failed: "pay_failed", cancelled: "pay_cancelled", pending: "pay_pending" }[r];
+            if (key) toast(t(key));
+          }
+        } catch (e) {}
+      });
+  </script>
+</body>
+</html>
